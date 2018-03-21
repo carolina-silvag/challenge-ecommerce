@@ -7,9 +7,11 @@ class navbar extends Component {
 
   constructor() {
     super();
+    this.handleCarrito = this.handleCarrito.bind(this);
   }
 
-  componentWillMount() {
+  handleCarrito(booleano) {
+    this.props.onUpdateCarritoData(booleano); 
   }
 
   render() {
@@ -25,9 +27,9 @@ class navbar extends Component {
           <Navbar.Collapse>
             <Nav pullRight>
               <NavItem eventKey={1} href="#">
-                <div onClick={this.handleHome} className="" bsstyle="link">home</div>
+                <div onClick={this.handleHome} className="" bsstyle="link" >home</div>
               </NavItem>    
-              <NavItem eventKey={2} href="#">
+              <NavItem eventKey={2} href="#" onClick={() => this.handleCarrito(true)}>
                 <i className=" shopping fas fa-shopping-cart fa-2x"></i>
               </NavItem>
             </Nav>

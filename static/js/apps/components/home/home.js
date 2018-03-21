@@ -21,7 +21,7 @@ class home extends Component {
 
   renderItem(data) {
     return data.catalog.map(product=>{
-      return (<Col xs={4} md={2} id={product.name}>
+      return (<Col xs={4} md={2} key={product.id}>
               <Thumbnail src={product.imageURL} alt="">
                 <h3 className="text-center">{product.name}</h3>
                 <p className="text-center">{product.currency} {product.price}</p>

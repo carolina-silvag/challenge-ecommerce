@@ -1,37 +1,31 @@
 import React, { Component } from 'react';
 import { Row, Col, Grid } from 'react-bootstrap';
 import Navbar from '../components/navbar/navbar';
-import Home from '../components/home/home';
-import ModalCompra from '../components/modal/modal';
+import Body from '../components/body/body';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
 
-  constructor(prop) {
-    super(prop);
-    this.state = {
-      productData: {}
-    };
-    this.handleProductData = this.handleProductData.bind(this)
+    this.handleCarritoData = this.handleCarritoData.bind(this);
   }
 
-  handleProductData(data) {
-    console.log('estoy en el padre app', data)
-    this.setState({ productData: data });
-    this.child.openModalCompra();
+  handleCarritoData(booleano)
+  {
+    console.log('estoy en app', booleano)
+    this.child.openCarrito(booleano)
   }
 
-
-  
   render() {
     return (
       <div className="App">
-        <Navbar/>
+        <Navbar onUpdateCarritoData = {this.handleCarritoData}  />
         <Grid>
           <Row className="">
             <Col xs={12} md={12}>   
               <div>
-                <Home onUpdateProductData={this.handleProductData}/>
-                <ModalCompra data={this.state.productData} ref={(ref) => { this.child = ref; }}/>
+                <Body ref={(ref) => { this.child = ref; }} />
               </div>
             </Col>
           </Row>

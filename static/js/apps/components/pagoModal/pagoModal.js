@@ -3,7 +3,7 @@ import { Col, Grid, Row, FormControl, Button, Modal, ButtonGroup} from 'react-bo
 
 
 class PagoModal extends Component {
-  constructor(props, context) {
+  /*constructor(props, context) {
     super(props, context);
     this.state= {
       valor:[],
@@ -20,10 +20,15 @@ class PagoModal extends Component {
   handleSumar(menos) {
     let restar = this.state.cantidad + menos
     this.setState({cantidad : restar})
-  }
+  }*/
 
   renderProduct(data) {
-    return (
+    return 
+      <Row>
+        <Col className="text-center" md={12} xs={12}>
+          <h4>{data.name}</h4>
+        </Col>
+      </Row>
       <Row>
       <Col md={6} xs={6} className="text-center">
         <img src={data.imageURL}/>
@@ -49,12 +54,13 @@ class PagoModal extends Component {
             onChange={this.handleChangePrecio}
           />
       </Col>
-    </Row>)
+    </Row>
   };
 
 
   render() {
     const { data } = this.props;
+    console.log('pagoModal', data)
     return(
       <Row>
           {this.renderProduct(data)}       

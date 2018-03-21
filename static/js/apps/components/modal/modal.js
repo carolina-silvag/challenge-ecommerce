@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal, Button, ButtonToolbar, Row, Col, ButtonGroup, FormControl } from 'react-bootstrap';
-import PagoModal from './../pagoModal/pagoModal';
+/*import PagoModal from './../pagoModal/pagoModal';*/
 
 class ModalCompra extends Component {
   constructor(props, context) {
@@ -8,25 +8,37 @@ class ModalCompra extends Component {
 
     this.openModalCompra = this.openModalCompra.bind(this);
     this.handleHide = this.handleHide.bind(this);
+    this.handleRestar = this.handleRestar.bind(this);
+    this.handleSumar = this.handleSumar.bind(this);
+    /*this.handleChangePrecio = this.handleChangePrecio.bind(this);*/
 
     this.state = {
       show: false,
-      data: []
+      data: [],
+      cantidad:1,
+      precio: 250
     };
   }
 
   openModalCompra() {
-    this.setState({ show: true });
+    this.setState({ show: true, cantidad: 1 });
   }
 
   handleHide() {
     this.setState({ show: false });
   }
 
+  handleSumar(mas) {
+    this.setState({cantidad: this.state.cantidad + mas})
+  }
+
+  handleRestar(menos) {
+    this.setState({cantidad: this.state.cantidad - menos})
+  }
+
 
   render() {
     const { data } = this.props;
-    
     return (
       <ButtonToolbar>
 
@@ -45,7 +57,28 @@ class ModalCompra extends Component {
               <h4>{data.name}</h4>
             </Col>
           </Row>
-          <PagoModal data = {data}/>
+          <Row>
+            <Col md={6} xs={6} className="text-center">
+              <img src={data.imageURL}/>
+              <p className="text-center" data={data.price} onChange={this.handleChange} value={this.state.text}>{data.currency} {data.price} CLP</p>
+            </Col>
+            <Col md={6} xs={6}>
+              <p>Selecciona Cantidad</p>
+              <ButtonGroup>
+                <Button className="menos text-center" onClick={() => this.handleRestar(1)}><i class="fas fa-minus"></i></Button>
+                <FormControl className="contador"
+                  type="text"
+                  value={this.state.cantidad}
+                />
+                <Button className="mas text-center" onClick={() => this.handleSumar(1)}><i class="fas fa-plus"></i></Button>
+              </ButtonGroup>
+              <h4>Total a Pagar</h4>
+              <FormControl className="total"
+                  type="text"
+                  value={data.price * this.state.cantidad}
+                />
+            </Col>
+          </Row>
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={this.handleHide}>Seguir Comprando</Button>

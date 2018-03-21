@@ -1,1 +1,13 @@
-/* you can add any styles you think could improve user's experience */
+.contador {
+	width: 15%;
+	display: inline-block;
+	border-radius: 0;
+}
+.mas, .manos {
+	display: inline-block;
+	float: none !important;
+}
+
+.total {
+	width: 60%;
+}

@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './components/App';
 
-const App = ({ message }) => <div>{ message }</div>;
 
-ReactDOM.render(<App message="hello world" />, document.getElementById('app'));
+/*import Carrito from './components/carrito/carrito';
+import Eliminar from './components/eliminar/eliminar';*/
+
+ReactDOM.render(<App />, document.getElementById('app'));

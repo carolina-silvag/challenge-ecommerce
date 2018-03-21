@@ -1,0 +1,18 @@
+.sidebarBox {
+    border-right: 0.1em solid #6D6767;
+    text-align: left;
+    
+}
+
+.sidebarParragraph {
+    color: #6D6767;
+    display: block;
+}
+
+.separation {
+    margin-top: 2em;
+   
+}
+h4 {
+    color: #c7254e;
+}

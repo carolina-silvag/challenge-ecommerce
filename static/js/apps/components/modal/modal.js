@@ -38,7 +38,7 @@ class ModalCompra extends Component {
   }
 
   handleAddProduct(data, cantidad, precio) {
-    this.props.onUpdateAddProduct(data, cantidad);
+    this.props.onUpdateAddProductClick(data, cantidad);
   }
 
   render() {

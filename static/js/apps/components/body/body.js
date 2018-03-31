@@ -16,6 +16,15 @@ class Body extends Component {
     this.handleProductData = this.handleProductData.bind(this)
     this.openCarrito = this.openCarrito.bind(this);
     this.handleAddProduct = this.handleAddProduct.bind(this);
+    this.handleEliminar = this.handleEliminar.bind(this);
+  }
+
+  handleEliminar(id){
+    let data = this.state.addProduct.filter(producto=> {
+      return producto.id!==id;
+    })
+
+    this.setState({addProduct : data});
   }
 
   handleProductData(data) {
@@ -36,12 +45,10 @@ class Body extends Component {
       imagen: data.imageURL,
       cantidad: cantidad,
       signo: data.currency,
-      precio:precio
+      precio:data.price * cantidad
     }
-    let inicio = this.addProduct.length
-    if(!this.addProduct.length){
-      this.setState({addProduct: product});  
-    }
+    this.state.addProduct.push(product);
+    this.setState({addProduct: this.state.addProduct});  
   }
 
   render() {
@@ -50,14 +57,14 @@ class Body extends Component {
         <div>
           <h1 className="text-center">Falabella Shopping Cart</h1>
           <Home onUpdateProductData={this.handleProductData} />
-          <ModalCompra onUpdateAddProduct={this.handleAddProduct} data={this.state.productData} ref={(ref) => { this.child = ref; }}/>
+          <ModalCompra onUpdateAddProducClick={this.handleAddProduct} data={this.state.productData} ref={(ref) => { this.child = ref; }}/>
         </div>
       );
     } else {
       return (
         <div>
           <h1 className="text-center">Falabella Shopping Cart</h1>
-          <PaginaCarrito data = {addProduct}/>
+          <PaginaCarrito data = {this.state.addProduct} onUpdateEliminar={this.handleEliminar}/>
         </div>
       )
     }

@@ -2,32 +2,34 @@ import React, { Component } from 'react';
 import { Button, ButtonToolbar, Row, Col, ButtonGroup, FormControl } from 'react-bootstrap';
 
 class PaginaCarrito extends Component {
-  /*constructor(props) {
+  constructor(props) {
     super(props);
-    this.state = { favorited: this.props.isFavorite };
+    this.state = { 
+      cantidad: 0,
+      precio: []
+    };
+    this.handleRestar = this.handleRestar.bind(this);
+    this.handleSumar = this.handleSumar.bind(this);
+    this.handleEliminar = this.handleEliminar.bind(this);
   }
 
-  favoriteBook() {
-    this.setState({ favorited: true });
-    this.props.onFavoriteSelect(this.props.book);
+  handleEliminar(elimino) {
+    console.log('me elimino')
+    this.props.onUpdateEliminar(elimino);
   }
 
-  unfavoriteBook() {
-    this.setState({ favorited: false });
-    this.props.onFavoriteDeselect(this.props.book);
+  handleSumar(cantidad) {
+    this.setState({cantidad: cantidad + mas})
   }
 
-  renderFavoriteHeart = () => {
-    if (! this.props.isAuthenticated) {
-      return '';
-    }
+  handleRestar(menos, valor, cantidad) {
+    this.setState({cantidad: cantidad - menos})
+  }
 
-    if (this.state.favorited) {
-      return <i className="favorite fa fa-heart" onClick={() => this.unfavoriteBook()} />;
-    }
-
-    return <i className="favorite fa fa-heart-o" onClick={() => this.favoriteBook()} />;
-  };*/
+  getPrecioTotal(data) {
+    return data.reduce( function(cnt,o){ return cnt + o.precio; }, 0);
+  }
+  
   renderAddProduct(data) {
     return data.map(product=> {
     return <Row className="bordeProducto">
@@ -36,20 +38,20 @@ class PaginaCarrito extends Component {
                 <Col md={3} xs={3}>
                   <img src={product.imagen}/>
                 </Col>
-                <Col md={3} xs={3}>
+                <Col md={2} xs={2}>
                   <h4>{product.nombre}</h4>
                   <h5>{product.signo} {product.valor} CLP</h5>
                 </Col>
                 <Col md={3} xs={3}>
                   <h4>Selecciona Cantidad</h4>
                   <ButtonGroup>
-                    <Button className="menos text-center" onClick={() => this.handleRestar(1)}><i className="fas fa-minus"></i></Button>
+                    <Button className="menos text-center" onClick={() => this.handleRestar(1, product.valor, product.cantidad)}><i className="fas fa-minus"></i></Button>
                     <FormControl className="contador"
                       type="text"
                       value={product.cantidad}
                       onChange={this.handleChange}
                     />
-                    <Button className="mas text-center" onClick={() => this.handleSumar(1)}><i className="fas fa-plus"></i></Button>
+                    <Button className="mas text-center" onClick={() => this.handleSumar(1, product.valor, product.cantidad)}><i className="fas fa-plus"></i></Button>
                   </ButtonGroup>
                 </Col>
                 <Col md={3} xs={3}>
@@ -59,6 +61,10 @@ class PaginaCarrito extends Component {
                       value={product.precio}
                       onChange={this.handleChange}
                     />
+                </Col>
+                <Col md={1} xs={1}>
+                  <h4>Eliminar</h4>
+                  <Button className="text-center" onClick={() => this.handleEliminar(product.id)}><i className="fas fa-trash-alt fa-2x"></i></Button>
                 </Col>
               </Row>
             </Col>
@@ -72,6 +78,16 @@ class PaginaCarrito extends Component {
     return (
       <div>
         {this.renderAddProduct(data)}
+        <Row>
+          <Col md={12} xs={12} className="text-right">
+            <h4 className="totalPagar">Total A Pagar $</h4>
+            <FormControl className="totalPagar"
+              type="text"
+              value={this.getPrecioTotal(data)}
+              onChange={this.handleChange}
+            /> 
+          </Col>
+        </Row>
       </div>
     );
   }
